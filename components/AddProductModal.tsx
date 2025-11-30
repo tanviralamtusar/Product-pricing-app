@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { X } from 'lucide-react-native';
 import { useProducts } from '../contexts/ProductContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface AddProductModalProps {
   onClose: () => void;
@@ -19,6 +20,7 @@ interface AddProductModalProps {
 
 export default function AddProductModal({ onClose }: AddProductModalProps) {
   const { addProduct } = useProducts();
+  const { colors } = useTheme();
   const [name, setName] = useState<string>('');
   const [pricePerKg, setPricePerKg] = useState<string>('');
 
@@ -43,15 +45,15 @@ export default function AddProductModal({ onClose }: AddProductModalProps) {
   const isValid = name.trim().length > 0 && pricePerKg.length > 0 && parseFloat(pricePerKg) > 0;
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardView}
       >
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>Add Product</Text>
+        <View style={[styles.header, { backgroundColor: colors.headerBackground, borderBottomColor: colors.border }]}>
+          <Text style={[styles.headerTitle, { color: colors.text }]}>Add Product</Text>
           <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-            <X size={24} color="#64748B" />
+            <X size={24} color={colors.icon} />
           </TouchableOpacity>
         </View>
 
@@ -61,11 +63,18 @@ export default function AddProductModal({ onClose }: AddProductModalProps) {
           keyboardShouldPersistTaps="handled"
         >
           <View style={styles.inputGroup}>
-            <Text style={styles.label}>Product Name</Text>
+            <Text style={[styles.label, { color: colors.textSecondary }]}>Product Name</Text>
             <TextInput
-              style={styles.input}
+              style={[
+                styles.input,
+                {
+                  backgroundColor: colors.inputBackground,
+                  borderColor: colors.border,
+                  color: colors.text,
+                },
+              ]}
               placeholder="Enter product name"
-              placeholderTextColor="#94A3B8"
+              placeholderTextColor={colors.placeholder}
               value={name}
               onChangeText={setName}
               autoFocus
@@ -73,11 +82,18 @@ export default function AddProductModal({ onClose }: AddProductModalProps) {
           </View>
 
           <View style={styles.inputGroup}>
-            <Text style={styles.label}>Price per KG (৳)</Text>
+            <Text style={[styles.label, { color: colors.textSecondary }]}>Price per KG (৳)</Text>
             <TextInput
-              style={styles.input}
+              style={[
+                styles.input,
+                {
+                  backgroundColor: colors.inputBackground,
+                  borderColor: colors.border,
+                  color: colors.text,
+                },
+              ]}
               placeholder="Enter price per kg"
-              placeholderTextColor="#94A3B8"
+              placeholderTextColor={colors.placeholder}
               value={pricePerKg}
               onChangeText={setPricePerKg}
               keyboardType="decimal-pad"
@@ -85,21 +101,31 @@ export default function AddProductModal({ onClose }: AddProductModalProps) {
           </View>
         </ScrollView>
 
-        <View style={styles.footer}>
+        <View style={[styles.footer, { backgroundColor: colors.headerBackground, borderTopColor: colors.border }]}>
           <TouchableOpacity
-            style={styles.cancelButton}
+            style={[styles.cancelButton, { backgroundColor: colors.border }]}
             onPress={onClose}
             activeOpacity={0.7}
           >
-            <Text style={styles.cancelButtonText}>Cancel</Text>
+            <Text style={[styles.cancelButtonText, { color: colors.textSecondary }]}>Cancel</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.saveButton, !isValid && styles.saveButtonDisabled]}
+            style={[
+              styles.saveButton,
+              { backgroundColor: isValid ? colors.primary : colors.border },
+            ]}
             onPress={handleSave}
             activeOpacity={0.7}
             disabled={!isValid}
           >
-            <Text style={styles.saveButtonText}>Add Product</Text>
+            <Text
+              style={[
+                styles.saveButtonText,
+                { color: isValid ? '#FFFFFF' : colors.textSecondary },
+              ]}
+            >
+              Add Product
+            </Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
@@ -110,7 +136,6 @@ export default function AddProductModal({ onClose }: AddProductModalProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8FAFC',
   },
   keyboardView: {
     flex: 1,
@@ -121,14 +146,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 24,
     paddingVertical: 16,
-    backgroundColor: '#FFFFFF',
     borderBottomWidth: 1,
-    borderBottomColor: '#E2E8F0',
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: '600' as const,
-    color: '#0F172A',
   },
   closeButton: {
     width: 40,
@@ -149,53 +171,40 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '600' as const,
-    color: '#334155',
     marginBottom: 8,
   },
   input: {
-    backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: '#E2E8F0',
     borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 14,
     fontSize: 16,
-    color: '#0F172A',
   },
   footer: {
     flexDirection: 'row',
     gap: 12,
     paddingHorizontal: 24,
     paddingVertical: 16,
-    backgroundColor: '#FFFFFF',
     borderTopWidth: 1,
-    borderTopColor: '#E2E8F0',
   },
   cancelButton: {
     flex: 1,
     paddingVertical: 16,
     borderRadius: 12,
-    backgroundColor: '#F1F5F9',
     alignItems: 'center',
   },
   cancelButtonText: {
     fontSize: 16,
     fontWeight: '600' as const,
-    color: '#64748B',
   },
   saveButton: {
     flex: 1,
     paddingVertical: 16,
     borderRadius: 12,
-    backgroundColor: '#4A90E2',
     alignItems: 'center',
-  },
-  saveButtonDisabled: {
-    backgroundColor: '#CBD5E1',
   },
   saveButtonText: {
     fontSize: 16,
     fontWeight: '600' as const,
-    color: '#FFFFFF',
   },
 });

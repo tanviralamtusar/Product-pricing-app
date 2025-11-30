@@ -1,12 +1,51 @@
-// template
-const tintColorLight = "#2f95dc";
+const tintColorLight = "#4A90E2";
+const tintColorDark = "#60A5FA";
 
-export default {
+export const Colors = {
   light: {
-    text: "#000",
-    background: "#fff",
+    text: "#0F172A",
+    textSecondary: "#64748B",
+    background: "#F8FAFC",
+    card: "#FFFFFF",
+    border: "#E2E8F0",
     tint: tintColorLight,
+    icon: "#64748B",
     tabIconDefault: "#ccc",
     tabIconSelected: tintColorLight,
+    primary: "#4A90E2",
+    secondary: "#FEF3C7", 
+    secondaryText: "#D97706",
+    badge: "#F1F5F9",
+    badgeText: "#334155",
+    danger: "#EF4444",
+    success: "#22C55E",
+    inputBackground: "#FFFFFF",
+    modalOverlay: "rgba(0, 0, 0, 0.5)",
+    placeholder: "#94A3B8",
+    headerBackground: "#FFFFFF",
+  },
+  dark: {
+    text: "#F1F5F9",
+    textSecondary: "#94A3B8",
+    background: "#0F172A",
+    card: "#1E293B",
+    border: "#334155",
+    tint: tintColorDark,
+    icon: "#94A3B8",
+    tabIconDefault: "#ccc",
+    tabIconSelected: tintColorDark,
+    primary: "#60A5FA",
+    secondary: "#451a03", 
+    secondaryText: "#FCD34D",
+    badge: "#334155",
+    badgeText: "#E2E8F0",
+    danger: "#F87171",
+    success: "#4ADE80",
+    inputBackground: "#1E293B",
+    modalOverlay: "rgba(0, 0, 0, 0.7)",
+    placeholder: "#64748B",
+    headerBackground: "#1E293B",
   },
 };
+
+export type Theme = keyof typeof Colors;
