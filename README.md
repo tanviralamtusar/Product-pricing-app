@@ -1,4 +1,4 @@
-# Offline Product Price App
+# Price Tracker App
 
 This is a native cross-platform mobile app created with Expo and React Native.
 
